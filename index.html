@@ -12,11 +12,125 @@
     <link rel="apple-touch-icon" href="/icon-192.png" />
     <link rel="icon" type="image/png" href="/icon-192.png" />
     <title>Sınav Takip | LGS • TYT • AYT</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;900&display=swap" rel="stylesheet">
     <style>
-      body { margin: 0; padding: 0; background: #0a0a12; overflow-x: hidden; }
+      body { margin:0; padding:0; background:#0a0a12; overflow-x:hidden; }
+
+      /* ─── SPLASH ─── */
+      #splash {
+        position:fixed;inset:0;z-index:99999;background:#0a0a12;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        font-family:'JetBrains Mono',monospace;
+        transition:opacity 0.7s ease;
+      }
+      #splash.hide { opacity:0; pointer-events:none; }
+
+      #splash .grid {
+        position:absolute;inset:0;
+        background-image:linear-gradient(rgba(0,240,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,0.04) 1px,transparent 1px);
+        background-size:40px 40px;
+      }
+
+      #splash .letters { display:flex;align-items:center;gap:3px;z-index:2;margin-bottom:16px; }
+      #splash .gap { width:16px; }
+
+      #splash .lt {
+        font-size:clamp(32px,9vw,52px);font-weight:900;
+        opacity:0;transform:translateY(-60px) rotate(-15deg) scale(0.5);
+        animation:spDrop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+        will-change:transform,opacity;
+      }
+      .cg { color:#39ff14;text-shadow:0 0 12px #39ff14,0 0 24px rgba(57,255,20,0.5); }
+      .cc { color:#00f0ff;text-shadow:0 0 12px #00f0ff,0 0 24px rgba(0,240,255,0.5); }
+      .cp { color:#ff2d75;text-shadow:0 0 12px #ff2d75,0 0 24px rgba(255,45,117,0.5); }
+
+      @keyframes spDrop {
+        to { opacity:1;transform:translateY(0) rotate(0) scale(1); }
+      }
+
+      #splash .line {
+        width:0;height:2px;z-index:2;
+        background:linear-gradient(90deg,transparent,#00f0ff,#ff2d75,#39ff14,transparent);
+        box-shadow:0 0 8px rgba(0,240,255,0.4);
+        animation:spLine 0.6s ease 1.2s forwards;
+      }
+      @keyframes spLine { to { width:min(240px,55vw); } }
+
+      #splash .sub {
+        font-size:10px;letter-spacing:5px;color:#e0e0e8;z-index:2;margin-top:8px;
+        opacity:0;animation:spFade 0.4s ease 1.6s forwards;
+      }
+      @keyframes spFade { to { opacity:0.5; } }
+
+      #splash .emoji {
+        font-size:clamp(44px,12vw,64px);margin-top:32px;z-index:2;
+        opacity:0;animation:spPop 0.6s cubic-bezier(0.34,1.56,0.64,1) 2.0s forwards;
+        will-change:transform,opacity;
+      }
+      @keyframes spPop {
+        0% { opacity:0;transform:scale(0) rotate(-15deg); }
+        60% { opacity:1;transform:scale(1.2) rotate(5deg); }
+        100% { opacity:1;transform:scale(1) rotate(0); }
+      }
+
+      #splash .msg { z-index:2;margin-top:14px;display:flex;gap:1px; }
+      #splash .mc {
+        font-size:clamp(16px,4.5vw,26px);font-weight:900;
+        color:#ffe600;letter-spacing:clamp(1px,0.4vw,3px);
+        text-shadow:0 0 8px #ffe600,0 0 20px rgba(255,230,0,0.5);
+        opacity:0;transform:translateY(10px);
+        animation:spChar 0.3s ease forwards;
+        will-change:transform,opacity;
+      }
+      @keyframes spChar { to { opacity:1;transform:translateY(0); } }
     </style>
   </head>
   <body>
+
+    <!-- SPLASH - Saf HTML, React'tan bağımsız -->
+    <div id="splash">
+      <div class="grid"></div>
+      <div class="letters">
+        <span class="lt cg" style="animation-delay:0.1s">L</span>
+        <span class="lt cg" style="animation-delay:0.2s">G</span>
+        <span class="lt cg" style="animation-delay:0.3s">S</span>
+        <span class="gap"></span>
+        <span class="lt cc" style="animation-delay:0.4s">T</span>
+        <span class="lt cc" style="animation-delay:0.5s">Y</span>
+        <span class="lt cc" style="animation-delay:0.6s">T</span>
+        <span class="gap"></span>
+        <span class="lt cp" style="animation-delay:0.7s">A</span>
+        <span class="lt cp" style="animation-delay:0.8s">Y</span>
+        <span class="lt cp" style="animation-delay:0.9s">T</span>
+      </div>
+      <div class="line"></div>
+      <div class="sub">DERS TAKİP UYGULAMASI</div>
+      <div class="emoji">👍</div>
+      <div class="msg">
+        <span class="mc" style="animation-delay:2.60s">B</span>
+        <span class="mc" style="animation-delay:2.64s">A</span>
+        <span class="mc" style="animation-delay:2.68s">Ş</span>
+        <span class="mc" style="animation-delay:2.72s">A</span>
+        <span class="mc" style="animation-delay:2.76s">R</span>
+        <span class="mc" style="animation-delay:2.80s">A</span>
+        <span class="mc" style="animation-delay:2.84s">C</span>
+        <span class="mc" style="animation-delay:2.88s">A</span>
+        <span class="mc" style="animation-delay:2.92s">K</span>
+        <span class="mc" style="animation-delay:2.96s">S</span>
+        <span class="mc" style="animation-delay:3.00s">I</span>
+        <span class="mc" style="animation-delay:3.04s">N</span>
+        <span class="mc" style="animation-delay:3.08s">I</span>
+        <span class="mc" style="animation-delay:3.12s">Z</span>
+        <span class="mc" style="animation-delay:3.16s">!</span>
+      </div>
+    </div>
+
+    <script>
+      setTimeout(function(){ document.getElementById('splash').classList.add('hide'); }, 4500);
+      setTimeout(function(){ var s=document.getElementById('splash'); if(s) s.remove(); }, 5200);
+    </script>
+
+    <!-- REACT APP -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
