@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import Splash from "./Splash.jsx";
 
 const DEFAULT_CURRICULUM = {
   LGS: {
@@ -313,7 +314,7 @@ function SettingsPage({exam,curriculum,setCurriculum,completed,setCompleted,onCl
 export default function App(){
   const[exam,setExam]=useState("LGS");const[activeSubject,setActiveSubject]=useState(null);const[expanded,setExpanded]=useState({});
   const[completed,setCompleted]=useState({});const[curriculum,setCurriculum]=useState(null);const[time,setTime]=useState(new Date());
-  const[loaded,setLoaded]=useState(false);const[showSettings,setShowSettings]=useState(false);
+  const[loaded,setLoaded]=useState(false);const[showSettings,setShowSettings]=useState(false);const[showSplash,setShowSplash]=useState(true);
   useEffect(()=>{async function load(){try{const r=localStorage.getItem(STORAGE_KEY);if(r)setCompleted(JSON.parse(r));}catch{}try{const r=localStorage.getItem(CURRICULUM_KEY);if(r)setCurriculum(JSON.parse(r));else setCurriculum(JSON.parse(JSON.stringify(DEFAULT_CURRICULUM)));}catch{setCurriculum(JSON.parse(JSON.stringify(DEFAULT_CURRICULUM)));}setLoaded(true);}load();},[]);
   useEffect(()=>{if(!loaded)return;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(completed));}catch{}},[completed,loaded]);
   useEffect(()=>{if(!loaded||!curriculum)return;try{localStorage.setItem(CURRICULUM_KEY,JSON.stringify(curriculum));}catch{}},[curriculum,loaded]);
@@ -324,6 +325,7 @@ export default function App(){
   const stats=useMemo(()=>{if(!activeSubject||!curriculum)return{total:0,done:0};const all=getAllTopics(curriculum,exam,activeSubject);let done=0;all.forEach(t=>{if(completed[gk(exam,activeSubject,t)])done++;});return{total:all.length,done,remaining:all.length-done};},[exam,activeSubject,completed,curriculum]);
   const totalStats=useMemo(()=>{if(!curriculum)return{total:0,done:0,remaining:0};let total=0,done=0;Object.keys(curriculum[exam]||{}).forEach(su=>{const all=getAllTopics(curriculum,exam,su);total+=all.length;all.forEach(t=>{if(completed[gk(exam,su,t)])done++;});});return{total,done,remaining:total-done};},[exam,completed,curriculum]);
   if(!curriculum)return(<div style={{minHeight:"100vh",background:C.bg,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'JetBrains Mono',monospace",color:C.neonCyan}}><div style={{textAlign:"center"}}><div style={{fontSize:28,animation:"pulse 1.5s infinite",textShadow:`0 0 20px ${C.neonCyan}`}}>⟳</div><div style={{marginTop:8,fontSize:12,letterSpacing:2}}>YÜKLENİYOR...</div></div></div>);
+  if(showSplash) return (<Splash onComplete={()=>setShowSplash(false)} />);
   if(showSettings) return (<SettingsPage exam={exam} curriculum={curriculum} setCurriculum={setCurriculum} completed={completed} setCompleted={setCompleted} onClose={()=>setShowSettings(false)}/>);
   const eCol=EXAM_COLORS[exam];const daysLeft=daysUntil(EXAM_DATES[exam]);const subjects=Object.keys(curriculum[exam]||{});const subjectColor=SUBJECT_COLORS[activeSubject]||eCol;const progressPct=totalStats.total>0?Math.round((totalStats.done/totalStats.total)*100):0;
   const trDays=["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];const trMonths=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
