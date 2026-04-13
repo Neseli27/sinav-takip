@@ -259,8 +259,40 @@ const DEFAULT_CURRICULUM = {
   }
 };
 
-const EXAM_DATES={LGS:new Date(2026,5,13,9,30),TYT:new Date(2026,5,20,10,15),AYT:new Date(2026,5,21,10,15)};
-const EXAM_INFO={LGS:"13 Haziran 2026 Cumartesi • 09:30",TYT:"20 Haziran 2026 Cumartesi • 10:15",AYT:"21 Haziran 2026 Pazar • 10:15"};
+function getExamDates(){
+  const now=new Date();const y=now.getFullYear();
+  // Tahmini tarihler: LGS Haziran 2. cumartesi, TYT Haziran 3. cumartesi, AYT ertesi pazar
+  // 2026 kesin: LGS 13 Haz, TYT 20 Haz, AYT 21 Haz
+  const knownDates={
+    2026:{LGS:new Date(2026,5,13,9,30),TYT:new Date(2026,5,20,10,15),AYT:new Date(2026,5,21,10,15)}
+  };
+  function estimateYear(yr){
+    // Tahmini: LGS Haziran 2. hafta cumartesi, TYT 3. hafta cumartesi, AYT ertesi gün
+    const junFirst=new Date(yr,5,1);const dayOfWeek=junFirst.getDay();
+    const firstSat=(6-dayOfWeek+7)%7+1;
+    const lgsSat=firstSat+7; // 2. cumartesi
+    const tytSat=firstSat+14; // 3. cumartesi
+    return{
+      LGS:new Date(yr,5,lgsSat,9,30),
+      TYT:new Date(yr,5,tytSat,10,15),
+      AYT:new Date(yr,5,tytSat+1,10,15)
+    };
+  }
+  // Önce bilinen tarihlere bak
+  if(knownDates[y]&&now<knownDates[y].AYT) return knownDates[y];
+  if(knownDates[y+1]) return knownDates[y+1];
+  // Tahmini hesapla
+  const thisYear=knownDates[y]||estimateYear(y);
+  if(now<thisYear.AYT) return thisYear;
+  return estimateYear(y+1);
+}
+function getExamInfo(dates){
+  const opts={day:"numeric",month:"long",year:"numeric",weekday:"long"};
+  const fmt=(d,t)=>{try{return d.toLocaleDateString("tr-TR",opts)+" • "+t;}catch{return"";}};
+  return{LGS:fmt(dates.LGS,"09:30"),TYT:fmt(dates.TYT,"10:15"),AYT:fmt(dates.AYT,"10:15")};
+}
+const EXAM_DATES=getExamDates();
+const EXAM_INFO=getExamInfo(EXAM_DATES);
 const EXAM_COLORS={LGS:"#39ff14",TYT:"#00f0ff",AYT:"#ff2d75"};
 const STORAGE_KEY="yks_progress_v5";const CURRICULUM_KEY="yks_curriculum_v5";
 const C={bg:"#0a0a12",surface:"#12121e",surfaceAlt:"#161628",border:"#1e1e35",neonCyan:"#00f0ff",neonPink:"#ff2d75",neonGreen:"#39ff14",neonYellow:"#ffe600",neonPurple:"#b44dff",text:"#e0e0e8",textDim:"#6b6b80",completed:"#ff2d55",completedBg:"rgba(255,45,85,0.08)",danger:"#ff3b30"};
