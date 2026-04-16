@@ -98,6 +98,18 @@ const DEFAULT_CURRICULUM = {
       "İstatistik": ["Aritmetik Ortalama","Medyan-Mod","Standart Sapma"],
       "Sayma": ["Permütasyon","Kombinasyon"]
     },
+    "Geometri": {
+      "Temel Kavramlar": ["Nokta-Doğru-Düzlem","Açı Türleri","Komşu-Tümler-Bütünler Açılar"],
+      "Üçgenler": ["Üçgenin Açı Özellikleri","Üçgende Kenar-Açı Bağıntıları","Dik Üçgen","Pisagor Bağıntısı","İkizkenar ve Eşkenar Üçgen","Özel Üçgenler"],
+      "Üçgende Benzerlik": ["Benzerlik Teoremleri","Açı-Açı Benzerliği","Kenar Oranları"],
+      "Üçgende Alan": ["Alan Formülleri","Üçgende Yükseklik","Açıortay-Kenarortay"],
+      "Çokgenler": ["Çokgenlerin Özellikleri","İç ve Dış Açılar","Düzgün Çokgenler"],
+      "Dörtgenler": ["Paralelkenar","Dikdörtgen","Kare","Eşkenar Dörtgen","Yamuk","Deltoid"],
+      "Çember ve Daire": ["Çemberde Açılar","Teğet-Kiriş İlişkileri","Çevreye Dair Açılar","Dairede Alan"],
+      "Koordinat Geometrisi": ["Noktanın Analitiği","İki Nokta Arası Uzaklık","Orta Nokta"],
+      "Dönüşüm Geometrisi": ["Öteleme","Yansıma","Döndürme"],
+      "Katı Cisimler": ["Prizmalar","Piramitler","Silindir","Koni","Küre"]
+    },
     "Fizik": {
       "Fizik Bilimine Giriş": ["Fiziksel Niceliklerin Ölçülmesi","Madde ve Özellikleri"],
       "Kuvvet ve Hareket": ["Kuvvet","Newton Hareket Yasaları","Sürtünme Kuvveti"],
@@ -174,11 +186,22 @@ const DEFAULT_CURRICULUM = {
       "Limit ve Süreklilik": ["Limit Kavramı","Belirsizlik","Süreklilik"],
       "Türev": ["Türev Kavramı","Türev Kuralları","Uygulamaları","Maksimum-Minimum"],
       "İntegral": ["Belirsiz İntegral","Belirli İntegral","Alan Hesaplama"],
-      "Analitik Geometri": ["Doğru Denklemleri","Çember","Konikler"],
       "Karmaşık Sayılar": ["Kavramı","İşlemler"],
       "Matris ve Determinant": ["Matris İşlemleri","Determinant","Cramer Kuralı"],
       "Özel Tanımlı Fonksiyonlar": ["Tam Değer","İşaret Fonksiyonu","Parçalı Fonksiyon"],
       "Kombinatorik": ["İleri Kombinasyon","Binom Açılımı"]
+    },
+    "Geometri": {
+      "Üçgenler (İleri)": ["Açı-Kenar Bağıntıları","Üçgende Alan İleri","Açıortay Teoremleri","Kenarortay Teoremleri","Stewart Teoremi"],
+      "Üçgende Eşlik ve Benzerlik": ["Eşlik Teoremleri","Benzerlik İleri","Oran-Orantı Uygulamaları"],
+      "Çokgenler ve Dörtgenler": ["Dörtgen Özellikleri İleri","Yamuk Alan","Çokgenlerde Alan"],
+      "Çember ve Daire (İleri)": ["Teğet-Kiriş İlişkileri","Çevrel Açı Teoremleri","Çemberde Uzunluk ve Alan","Ortak Teğet-Kiriş"],
+      "Analitik Geometri": ["Noktanın Analitiği","Doğrunun Analitiği","Doğru Denklemleri","Nokta-Doğru Uzaklığı","İki Doğrunun Konumu"],
+      "Çemberin Analitiği": ["Çember Denklemi","Doğru-Çember İlişkisi","Teğet Doğru Denklemi"],
+      "Konikler": ["Parabol","Elips","Hiperbol"],
+      "Dönüşüm Geometrisi": ["Öteleme","Yansıma","Döndürme"],
+      "Katı Cisimler": ["Dikdörtgenler Prizması","Küp","Silindir","Piramit","Koni","Küre"],
+      "Trigonometri ile Geometri": ["Sinüs-Kosinüs Teoremleri","Trigonometrik Oranlarla Alan"]
     },
     "Fizik": {
       "Vektörler": ["Vektör Kavramı","Vektörel İşlemler"],
@@ -294,9 +317,9 @@ function getExamInfo(dates){
 const EXAM_DATES=getExamDates();
 const EXAM_INFO=getExamInfo(EXAM_DATES);
 const EXAM_COLORS={LGS:"#39ff14",TYT:"#00f0ff",AYT:"#ff2d75"};
-const STORAGE_KEY="yks_progress_v5";const CURRICULUM_KEY="yks_curriculum_v5";
+const STORAGE_KEY="yks_progress_v6";const CURRICULUM_KEY="yks_curriculum_v6";
 const C={bg:"#0a0a12",surface:"#12121e",surfaceAlt:"#161628",border:"#1e1e35",neonCyan:"#00f0ff",neonPink:"#ff2d75",neonGreen:"#39ff14",neonYellow:"#ffe600",neonPurple:"#b44dff",text:"#e0e0e8",textDim:"#6b6b80",completed:"#ff2d55",completedBg:"rgba(255,45,85,0.08)",danger:"#ff3b30"};
-const SUBJECT_COLORS={"Türkçe":"#00f0ff","Matematik":"#ff2d75","Fizik":"#b44dff","Kimya":"#39ff14","Biyoloji":"#ff8c00","Tarih":"#ffe600","Coğrafya":"#00bcd4","Felsefe":"#e040fb","Din Kültürü":"#7c4dff","Türk Dili ve Edebiyatı":"#00f0ff","Felsefe Grubu":"#e040fb","Fen Bilimleri":"#39ff14","İnkılap Tarihi":"#ffe600","İngilizce":"#ff6b6b"};
+const SUBJECT_COLORS={"Türkçe":"#00f0ff","Matematik":"#ff2d75","Geometri":"#ff6b9d","Fizik":"#b44dff","Kimya":"#39ff14","Biyoloji":"#ff8c00","Tarih":"#ffe600","Coğrafya":"#00bcd4","Felsefe":"#e040fb","Din Kültürü":"#7c4dff","Türk Dili ve Edebiyatı":"#00f0ff","Felsefe Grubu":"#e040fb","Fen Bilimleri":"#39ff14","İnkılap Tarihi":"#ffe600","İngilizce":"#ff6b6b"};
 const NEON_PALETTE=["#00f0ff","#ff2d75","#39ff14","#ffe600","#b44dff","#ff8c00","#00bcd4","#e040fb","#7c4dff","#ff6b6b"];
 
 function getAllTopics(c,e,s){const d=c[e]?.[s];if(!d)return[];const t=[];Object.entries(d).forEach(([k,v])=>{t.push(k);if(Array.isArray(v))v.forEach(x=>t.push(`${k}::${x}`));});return t;}
